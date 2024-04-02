@@ -20,6 +20,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "USER_ENTITY")
 public class User implements UserDetails{
 	
 	/**
@@ -39,13 +41,16 @@ public class User implements UserDetails{
 	private static final long serialVersionUID = -989460165708573541L;
 
 	@Id @GeneratedValue
+	@Column(name="ID_USER")
 	private Long id;
 	
-	@Column(unique = true)
+	@Column(unique = true, name="USERNAME")
 	private String username;
 	
+	@Column(name="PASSWORD")
 	private String password;
 	
+	@Column(name = "AVATAR")
 	private String avatar;
 	
 	@ElementCollection(fetch = FetchType.EAGER)

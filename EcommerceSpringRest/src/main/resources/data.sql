@@ -13,3 +13,16 @@ INSERT INTO PRODUCT (ID_PRODUCT, NAME, DESCRIPTION, PRICE, ID_CATEGORY) VALUES
 (2, 'T-shirt', 'A comfortable cotton t-shirt in various colors and sizes.', 15.99, 2),
 (3, 'Coffee Maker', 'Brew your favorite coffee with this sleek coffee maker.', 21.15, 3),
 (4, 'Remote Control Car', 'A fun remote control car for kids and adults alike.', 25.49, 1);
+
+--Users
+CREATE TABLE IF NOT EXISTS USER_ENTITY(
+    ID_USER BIGINT NOT NULL,
+	USERNAME VARCHAR2(255),
+	PASSWORD VARCHAR2(255),
+	AVATAR VARCHAR2(255)
+);
+
+CREATE TABLE IF NOT EXISTS USER_ROLES(
+    ID_USER BIGINT NOT NULL,
+    ROLES VARCHAR(255)
+);
