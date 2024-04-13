@@ -1,15 +1,15 @@
 package com.ecommerce.controller;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
-import com.ecommerce.model.user.User;
+import com.ecommerce.model.user.dto.CreateUserDTO;
+import com.ecommerce.model.user.dto.GetUserDTO;
+import com.ecommerce.model.user.dto.UserDTOConverter;
 import com.ecommerce.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,14 +20,11 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
+	private final UserDTOConverter userDTOConverter;
 	
 	@PostMapping("/")
-	public ResponseEntity<User> newUser(@RequestBody User newUser){
-		try {
+	public ResponseEntity<GetUserDTO> newUser(@RequestBody CreateUserDTO newUser){
 			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(userService.save(newUser));
-		} catch(DataIntegrityViolationException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		}
+					.body(userDTOConverter.convertUserToGetUserDTO(userService.newUser(newUser)));
 	}
 }
