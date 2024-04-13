@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.ecommerce.error.ApiError;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ public class CustomBasicAuthenticationEntryPoint extends BasicAuthenticationEntr
 		writer.println(strApiError);
 	}
 	
+	@PostConstruct
 	public void initRealmname() {
 		setRealmName("myecommerce.com");
 	}
