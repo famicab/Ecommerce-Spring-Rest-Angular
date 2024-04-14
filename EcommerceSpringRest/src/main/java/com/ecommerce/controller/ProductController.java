@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ecommerce.dto.CreateProductDTO;
+import com.ecommerce.dto.EditProductDTO;
 import com.ecommerce.dto.ProductDTO;
 import com.ecommerce.dto.converter.ProductDTOConverter;
 import com.ecommerce.error.exceptions.ProductNotFoundException;
@@ -74,5 +77,14 @@ public class ProductController {
 	@PostMapping(value="/product")
 	public ResponseEntity<?> newProduct(@RequestPart("new") CreateProductDTO newProduct, @RequestPart("file") MultipartFile file){
 		return ResponseEntity.status(HttpStatus.CREATED).body(productService.newProduct(newProduct, file));
+	}
+	
+	@PutMapping("/product/{id}")
+	public Product editProduct(@RequestBody EditProductDTO edit, @PathVariable Long id){
+		return productService.findById(id).map(p -> {
+			p.setName(edit.getName());
+			p.setPrice(edit.getPrice());
+			return productService.edit(p);
+		}).orElseThrow(() -> new ProductNotFoundException(id));
 	}
 }
