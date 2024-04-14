@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	
 	private final CustomBasicAuthenticationEntryPoint customBasicAuthenticationEntryPoint;
+	private final AccessDeniedHandler accessDeniedHandler;
  
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -39,11 +41,16 @@ public class SecurityConfig {
 					.requestMatchers("/category/**").permitAll()
 					.requestMatchers("/login/**").permitAll()
 					.requestMatchers("/product/**").permitAll()
+					.requestMatchers("/order/**").hasAnyRole("USER", "ADMIN")
 					.anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults())
 				.sessionManagement(httpSecuritySessionManagementConfigurer -> 
 				httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-				
+		http.exceptionHandling((exception) -> {
+			exception.accessDeniedHandler(accessDeniedHandler);
+			exception.authenticationEntryPoint(customBasicAuthenticationEntryPoint);
+		});
+		
 		return http.build();
 	}
 	

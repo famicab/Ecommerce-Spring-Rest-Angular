@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import com.ecommerce.dto.converter.ProductDTOConverter;
 import com.ecommerce.error.exceptions.ProductNotFoundException;
 import com.ecommerce.error.exceptions.SearchProductNoResultException;
 import com.ecommerce.model.Product;
+import com.ecommerce.model.user.User;
 import com.ecommerce.service.ProductService;
 import com.ecommerce.util.pagination.PaginationLinksUtils;
 import com.ecommerce.views.ProductViews;
@@ -80,7 +82,7 @@ public class ProductController {
 	}
 	
 	@PutMapping("/product/{id}")
-	public Product editProduct(@RequestBody EditProductDTO edit, @PathVariable Long id){
+	public Product editProduct(@RequestBody EditProductDTO edit, @PathVariable Long id, @AuthenticationPrincipal User user){
 		return productService.findById(id).map(p -> {
 			p.setName(edit.getName());
 			p.setPrice(edit.getPrice());
