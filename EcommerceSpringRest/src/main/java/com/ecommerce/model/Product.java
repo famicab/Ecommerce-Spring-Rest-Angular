@@ -1,30 +1,37 @@
 package com.ecommerce.model;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Getter
-@Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+
+@Builder
+@Data @NoArgsConstructor @AllArgsConstructor
 @Entity
-@Table(name = "PRODUCT")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Product.class )
 public class Product {
 
-	@EqualsAndHashCode.Include
 	@Id
-	@Column(name="ID_PRODUCT")
+	@GeneratedValue
 	private long id;
 	
 	@Column
@@ -36,8 +43,17 @@ public class Product {
 	@Column
 	private BigDecimal price;
 	
+	@Column
+	private String image;
+	
 	@JoinColumn(name = "ID_CATEGORY")
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference
 	private Category category;
+	
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	@ManyToMany(mappedBy="products")
+	@Builder.Default
+	private Set<Batch> batches = new HashSet<>();
 }

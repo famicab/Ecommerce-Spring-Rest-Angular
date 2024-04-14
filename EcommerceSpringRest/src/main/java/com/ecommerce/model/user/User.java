@@ -27,12 +27,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "USER_ENTITY")
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "USER_ENTITY")
 public class User implements UserDetails{
 	
 	/**
@@ -41,17 +41,18 @@ public class User implements UserDetails{
 	private static final long serialVersionUID = -989460165708573541L;
 
 	@Id @GeneratedValue
-	@Column(name="ID_USER")
 	private Long id;
 	
-	@Column(unique = true, name="USERNAME")
+	@Column(unique = true)
 	private String username;
-	
-	@Column(name="PASSWORD")
-	private String password;
-	
-	@Column(name = "AVATAR")
+
+	private String password;	
+
 	private String avatar;
+	
+	private String fullName;
+	
+	private String email;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
