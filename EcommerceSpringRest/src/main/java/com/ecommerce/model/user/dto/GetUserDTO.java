@@ -14,5 +14,7 @@ public class GetUserDTO {
 
 	private String username;
 	private String avatar;
+	private String fullname;
+	private String email;
 	private Set<String> roles;
 }
