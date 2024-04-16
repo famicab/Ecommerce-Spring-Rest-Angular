@@ -35,6 +35,7 @@ public class ProductDTOConverter {
 	public ProductDTO convertProductToProductDTO(Product product) {
 		return ProductDTO.builder()
 				.name(product.getName())
+				.price(product.getPrice())
 				.image(product.getImage())
 				.category(product.getCategory().getName())
 				.id(product.getId())

@@ -34,7 +34,9 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 
+@Log
 @RestController
 @RequiredArgsConstructor
 public class ProductController {
@@ -44,20 +46,19 @@ public class ProductController {
 	private final PaginationLinksUtils paginationLinksUtils;
 	
 	@JsonView(ProductViews.DtoWithPrice.class)
-	@GetMapping(path="/product")
-	public ResponseEntity<?> searchProduct(@RequestParam("name") Optional<String> text, 
-			@RequestParam("price") Optional<BigDecimal> price, Pageable pageable, HttpServletRequest request){
+	@GetMapping(value="/product")
+	public ResponseEntity<?> searchWithParam(@RequestParam(value = "name") Optional<String> text, 
+			@RequestParam(value="price") Optional<BigDecimal> price, Pageable pageable, HttpServletRequest request){
 
+		Page<Product> result = productService.findByArgs(text, price, pageable);
 
-		Page<Product> result = productService.findAll(pageable);
-		
 		if(result.isEmpty()) {
 			throw new SearchProductNoResultException();
 		} else {
 			Page<ProductDTO> dtoList = result.map(productDTOConverter::convertToDTO);
 			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
 			
-			return ResponseEntity.ok().header("link", paginationLinksUtils.createLinkHeader(dtoList, uriBuilder))
+			return ResponseEntity.ok().header("Link", paginationLinksUtils.createLinkHeader(dtoList, uriBuilder))
 					.body(dtoList);
 		}
 		
