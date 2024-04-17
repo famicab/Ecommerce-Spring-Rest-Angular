@@ -18,6 +18,8 @@ public class UserDTOConverter {
 						.map(UserRole::name)
 						.collect(Collectors.toSet())
 				)
+				.fullname(user.getFullName())
+				.email(user.getEmail())
 				.build();
 	}
 }
