@@ -51,8 +51,8 @@ public class Order {
 	private Set<LineOrder> lines = new HashSet<>();
 	
 	public BigDecimal getTotal() {
-		Function<LineOrder, BigDecimal> prices = lineorder -> lineorder.getPrice();
-		return lines.stream().map(prices).reduce(BigDecimal.ZERO, BigDecimal::add);
+		Function<LineOrder, BigDecimal> subTotals = lineorder -> lineorder.getSubtotal();
+		return lines.stream().map(subTotals).reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 	
 	public void addLineOrder(LineOrder lo) {
