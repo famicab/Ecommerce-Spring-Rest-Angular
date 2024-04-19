@@ -18,17 +18,27 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.ecommerce.security.jwt.JwtAuthorizationFilter;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@SecurityScheme(name = "App Bearer Token", description = "Add only the JWT String, without headers", in=SecuritySchemeIn.HEADER ,type = SecuritySchemeType.HTTP, scheme = "Bearer", bearerFormat = "JWT")
 @RequiredArgsConstructor
 public class SecurityConfig {
 	
 	private final JwtAuthenticationEntryPoint authenticationEntryPoint;
 	private final AccessDeniedHandler accessDeniedHandler;
 	private final JwtAuthorizationFilter authorizationFilter;
+	
+	private static final AntPathRequestMatcher[] WHITE_LIST_URLS = {
+			new AntPathRequestMatcher("/h2-console/**"),
+			new AntPathRequestMatcher("/swagger-ui/**"),
+			new AntPathRequestMatcher("/v3/**")
+	};
   
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -42,12 +52,8 @@ public class SecurityConfig {
 				
 				authorizationManagerRequestMatcherRegistry
 					.requestMatchers("/admin/**").hasAnyRole("ADMIN")
-					.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-					.requestMatchers("/category/**").permitAll()
-					.requestMatchers("/login/**").permitAll()
-					.requestMatchers("/product/**").permitAll()
-					.requestMatchers("/order/**").hasAnyRole("USER", "ADMIN")
-					.requestMatchers("/auth/**").permitAll()
+					.requestMatchers("/order/**", "/user/edit**").hasAnyRole("USER", "ADMIN")
+					.requestMatchers("/user/**", "/category/**", "/login/**", "/product/**", "/auth/**").permitAll()
 					.anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults())
 				.sessionManagement(httpSecuritySessionManagementConfigurer -> 
@@ -60,10 +66,10 @@ public class SecurityConfig {
 		
 		return http.build();
 	}
-	
+
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 	    return web -> web.ignoring()
-	            .requestMatchers(new AntPathRequestMatcher("/h2-console/**"));
+	            .requestMatchers(WHITE_LIST_URLS);
 	}
 }

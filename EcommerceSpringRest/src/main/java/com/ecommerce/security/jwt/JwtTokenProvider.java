@@ -27,6 +27,7 @@ public class JwtTokenProvider {
 	public static final String TOKEN_PREFIX = "Bearer";
 	public static final String TOKEN_TYPE = "JWT";
 	
+	@Value("${jwt.secret:thisIsASecretThatIsCompletelySafeToStoreInHereSoThereIsNoProblemAtAll}")
 	private String jwtSecret;
 	
 	@Value("${jwt.token-expiration:864000}")

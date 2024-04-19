@@ -26,12 +26,14 @@ import com.ecommerce.model.user.UserRole;
 import com.ecommerce.service.OrderService;
 import com.ecommerce.util.pagination.PaginationLinksUtils;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/order")
 @RequiredArgsConstructor
+@Tag(name = "4. Order", description = "Order Endpoint")
 public class OrderController {
 
 	private final OrderService orderService;
