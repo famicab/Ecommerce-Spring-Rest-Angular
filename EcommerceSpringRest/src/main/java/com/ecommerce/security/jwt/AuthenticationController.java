@@ -22,17 +22,22 @@ import com.ecommerce.model.user.dto.UserDTOConverter;
 import com.ecommerce.security.jwt.model.JwtUserResponse;
 import com.ecommerce.security.jwt.model.LoginRequest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "1. Auth")
 public class AuthenticationController {
 
 	private final AuthenticationManager authenticationManager;
 	private final JwtTokenProvider tokenProvider;
 	private final UserDTOConverter converter;
 	
+	@Operation(summary = "Login", description = "Generates a JWT Token")
 	@PostMapping("/auth/login")
 	public ResponseEntity<JwtUserResponse> login(@Valid @RequestBody LoginRequest loginRequest){
 		Authentication authentication = 
@@ -50,6 +55,8 @@ public class AuthenticationController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
+	@Operation(summary = "Retrieve info.", description = "If the user is authenticated, will return his personal information")
+	@SecurityRequirement(name = "App Bearer Token")
 	@GetMapping("/user/me")
 	public GetUserDTO me(@AuthenticationPrincipal User user) {
 		return converter.convertUserToGetUserDTO(user);

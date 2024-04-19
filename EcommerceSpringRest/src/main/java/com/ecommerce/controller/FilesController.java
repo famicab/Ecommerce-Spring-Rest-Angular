@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ecommerce.upload.StorageService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
+@Tag(name = "5. Files", description = "Files Endpoint. Unfinished")
 public class FilesController {
 
 private static final Logger logger = LoggerFactory.getLogger(FilesController.class);
