@@ -50,28 +50,28 @@ INSERT INTO PRODUCT (id, name, price, id_category, image) VALUES
 (30, 'Juicer', 49.99, 3, 'https://dummyurl.com/juicer.jpg');
 
 -- Contraseña: Admin1
-insert into user_entity (id, full_name, email, username, password, avatar, created_at, last_password_change_at) 
-values (1, 'Admin admin', 'admin@ecommerce.com','admin','$2a$10$vPaqZvZkz6jhb7U7k/V/v.5vprfNdOnh4sxi/qpPRkYTzPmFlI9p2','https://api.adorable.io/avatars/285/admin@ecommerce.com.png',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+insert into user_entity (full_name, email, username, password, avatar, created_at, last_password_change_at) 
+values ('Admin admin', 'admin@ecommerce.com','admin','$2a$10$vPaqZvZkz6jhb7U7k/V/v.5vprfNdOnh4sxi/qpPRkYTzPmFlI9p2','https://api.adorable.io/avatars/285/admin@ecommerce.com.png',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 insert into USER_ROLES (user_id, roles) values (1,'USER');
 insert into USER_ROLES (user_id, roles) values (1,'ADMIN');
 
 
--- Contraseña: Marialopez1
-insert into user_entity (id, full_name, email, username, password, avatar, created_at, last_password_change_at) 
-values (2, 'Usuario Primero', 'usuario.primero@ecommerce.net','usuarioprimero','$2a$10$3i95KIxdl8igcpDby.URMOgwdDR2q9UaSfor2kJJrhAPfNOC/HMSi','https://api.adorable.io/avatars/285/usuario.primero@ecommerce.com.png',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+-- Contraseña: UsuarioPrimero1
+insert into user_entity (full_name, email, username, password, avatar, created_at, last_password_change_at) 
+values ('Usuario Primero', 'usuario.primero@ecommerce.net','usuarioprimero','$2a$10$udJnz9otIl5h59sEE2dZcu4Tq/uUViihXr61ZDGeuaYEMfOHL08UG','https://api.adorable.io/avatars/285/usuario.primero@ecommerce.com.png',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 insert into USER_ROLES (user_id, roles) values (2,'USER');
 
--- Contraseña: Angelmartinez1
-insert into user_entity (id, full_name, email, username, password, avatar, created_at, last_password_change_at) 
-values (3, 'Juana Rodríguez', 'juana.rodriguez@ecommerce.net','juanarodriguez','$2a$10$37IEM6zzuwXqFrotYDtySOKITKfeNWR3NBRqcM7JYWnBDIaq9ByZm','https://api.adorable.io/avatars/285/juana.rodriguez@ecommerce.com.png',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+-- Contraseña: JuanaRodriguez1
+insert into user_entity (full_name, email, username, password, avatar, created_at, last_password_change_at) 
+values ('Juana Rodríguez', 'juana.rodriguez@ecommerce.net','juanarodriguez','$2a$10$IWrimuL74lpIzDq45xJOguEMEMJWFLwTwYPjX2JhPPg7Z5QIbtUKy','https://api.adorable.io/avatars/285/juana.rodriguez@ecommerce.com.png',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 insert into USER_ROLES (user_id, roles) values (3,'USER');
 
--- Contraseña: Anajimenez1
-insert into user_entity (id, full_name, email, username, password, avatar, created_at, last_password_change_at) 
-values (4, 'Peter Smith', 'peter.smith@ecommerce.net','petersmith','$2a$10$k0om5gtNBheWX54VzD1E0etCnqC0xChHjfW3lOXaeCpN5ST1vVGYm','https://api.adorable.io/avatars/285/peter.smith@ecommerce.com.png',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+-- Contraseña: PeterSmith69
+insert into user_entity (full_name, email, username, password, avatar, created_at, last_password_change_at) 
+values ('Peter Smith', 'peter.smith@ecommerce.net','petersmith','$2a$10$YgeEdMl3gseJH3IW1g3jdufdCvt4RScu/rMxd5R4g72rHuicEEocm','https://api.adorable.io/avatars/285/peter.smith@ecommerce.com.png',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 insert into USER_ROLES (user_id, roles) values (4,'USER');
 

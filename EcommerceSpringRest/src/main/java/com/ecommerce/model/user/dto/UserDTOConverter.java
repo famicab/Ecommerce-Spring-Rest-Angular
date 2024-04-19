@@ -22,4 +22,10 @@ public class UserDTOConverter {
 				.email(user.getEmail())
 				.build();
 	}
+	
+	public UpdateUserDTO converUserToUpdateUserDTO(User user) {
+		return UpdateUserDTO.builder()
+				.username(user.getUsername())
+				.build();
+	}
 }
