@@ -63,7 +63,7 @@ public class ProductService extends BaseService<Product, Long, ProductRepository
 			@Override
 			public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
 				if(name.isPresent()) {
-					return criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%"+ name.get() + "%");
+					return criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%"+ name.get().toLowerCase() + "%");
 				} else {
 					return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
 				}
