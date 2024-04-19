@@ -15,7 +15,7 @@ import lombok.Setter;
 @Builder
 public class CreateOrderDTO {
 
-private List<CreateLineOrderDto> lineas;
+private List<CreateLineOrderDto> lines;
 	
 	@Getter
 	@Setter

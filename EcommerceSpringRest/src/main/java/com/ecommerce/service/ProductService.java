@@ -32,7 +32,7 @@ public class ProductService extends BaseService<Product, Long, ProductRepository
 	public Product newProduct(CreateProductDTO newProductDTO, MultipartFile file) {
 		String imageUrl = null;
 		
-		if(!file.isEmpty()) {
+		if(file != null && !file.isEmpty()) {
 			String image = storageService.store(file);
 			imageUrl = MvcUriComponentsBuilder.fromMethodName(FilesController.class, "serveFile", image, null)
 					.build().toUriString();

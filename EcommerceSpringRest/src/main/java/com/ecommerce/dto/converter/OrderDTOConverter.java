@@ -13,15 +13,22 @@ public class OrderDTOConverter {
 
 	public GetOrderDTO convertOrderToGetOrderDTO(Order order) {
 
-		return GetOrderDTO.builder().fullName(order.getClient().getFullName()).avatar(order.getClient().getAvatar())
-				.email(order.getClient().getEmail()).date(order.getDateOrder()).total(order.getTotal()).lines(order
-						.getLines().stream().map(this::convertLineOrderToGetLineOrderDTO).collect(Collectors.toSet()))
+		return GetOrderDTO.builder()
+					.fullName(order.getClient().getFullName())
+					.avatar(order.getClient().getAvatar())
+					.email(order.getClient().getEmail())
+					.date(order.getDateOrder())
+					.total(order.getTotal()).lines(order
+					.getLines().stream().map(this::convertLineOrderToGetLineOrderDTO).collect(Collectors.toSet()))
 				.build();
 
 	}
 
 	public GetOrderDTO.GetLineOrderDTO convertLineOrderToGetLineOrderDTO(LineOrder line) {
-		return GetOrderDTO.GetLineOrderDTO.builder().quantity(line.getQuantity()).unitPrice(line.getPrice())
-				.productName(line.getProduct().getName()).subTotal(line.getSubtotal()).build();
+		return GetOrderDTO.GetLineOrderDTO.builder()
+				.quantity(line.getQuantity())
+				.unitPrice(line.getPrice())
+				.productName(line.getProduct().getName())
+				.subTotal(line.getSubtotal()).build();
 	}
 }

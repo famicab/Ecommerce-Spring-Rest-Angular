@@ -9,16 +9,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ecommerce.dto.CreateProductDTO;
@@ -87,10 +87,20 @@ public class ProductController {
 		}
 	}
 	
-	@Operation(summary = "Insert a new product")
+	@SecurityRequirement(name = "App Bearer Token")
+	@PreAuthorize("isAuthenticated()")
+	@Operation(summary = "Insert a new product",
+				description = "Requires authentication. Login as admin:Admin1")
 	@PostMapping(value="/product")
-	public ResponseEntity<?> newProduct(@RequestPart("new") CreateProductDTO newProduct, @RequestPart("file") MultipartFile file){
-		return ResponseEntity.status(HttpStatus.CREATED).body(productService.newProduct(newProduct, file));
+	public ResponseEntity<?> newProduct(@RequestBody CreateProductDTO newProduct){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User u = (User) authentication.getPrincipal();
+        
+        if (!u.getRoles().contains(UserRole.ADMIN)) {
+        	throw new NotEnoughPrivilegesException();
+        }
+        //TODO add functionality to upload a product with image
+		return ResponseEntity.status(HttpStatus.CREATED).body(productService.newProduct(newProduct, null));
 	}
 	
 	@SecurityRequirement(name = "App Bearer Token")
