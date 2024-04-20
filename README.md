@@ -1,6 +1,6 @@
 # Spring Boot eCommerce Project
 
-This is a simple Spring Boot project for an eCommerce website, made for learning purposes.
+This is a simple Spring Boot project for an eCommerce website, made for learning purposes. This project is based on the Spring Security course on Open Webinars platform, taught by Luis Miguel López.
 
 ## Table of Contents
 
