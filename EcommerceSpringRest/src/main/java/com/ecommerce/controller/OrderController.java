@@ -53,7 +53,7 @@ public class OrderController {
 			@AuthenticationPrincipal User user) throws Exception {
 		Page<Order> result = null;
 		
-		if(user.getRoles().contains(UserRole.ADMIN)) {
+		if(user.hasRole(UserRole.ADMIN)) {
 			result = orderService.findAll(pageable);
 		} else {
 			result = orderService.findAllByUser(user, pageable);
@@ -87,7 +87,7 @@ public class OrderController {
 	public ResponseEntity<?> deleteOrder(@PathVariable Long id, @AuthenticationPrincipal User user) throws OrderNotFoundException {
 		Optional<Order> delete = orderService.findById(id);
 
-		if(user.getRoles().contains(UserRole.ADMIN) && delete.isPresent()) {
+		if(user.hasRole(UserRole.ADMIN) && delete.isPresent()) {
 			orderService.delete(delete.get());
 			
 			return ResponseEntity.ok("Order deleted succesfully");

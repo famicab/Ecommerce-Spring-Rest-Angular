@@ -96,7 +96,7 @@ public class ProductController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User u = (User) authentication.getPrincipal();
         
-        if (!u.getRoles().contains(UserRole.ADMIN)) {
+        if (!u.hasRole(UserRole.ADMIN)) {
         	throw new NotEnoughPrivilegesException();
         }
         //TODO add functionality to upload a product with image
@@ -113,7 +113,7 @@ public class ProductController {
 		return productService.findById(id).map(p -> {
 			p.setName(edit.getName());
 			p.setPrice(edit.getPrice());
-			if(user != null && user.getRoles().contains(UserRole.ADMIN)) {
+			if(user != null && user.hasRole(UserRole.ADMIN)) {
 				return productService.edit(p);
 			} else {
 				throw new NotEnoughPrivilegesException();
