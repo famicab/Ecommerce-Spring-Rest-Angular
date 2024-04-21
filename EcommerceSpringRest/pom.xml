@@ -16,5 +16,6 @@
 	<modules>
 		<module>core</module>
 		<module>bootstrap</module>
+		<module>api</module>
 	</modules>
 </project>
