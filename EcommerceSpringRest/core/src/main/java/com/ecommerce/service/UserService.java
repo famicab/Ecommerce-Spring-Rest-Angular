@@ -5,17 +5,17 @@ import java.util.Set;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.ecommerce.error.exceptions.NewUserWithDifferentPasswordsException;
 import com.ecommerce.error.exceptions.OldPasswordDoesntMatchException;
+import com.ecommerce.model.PasswordEncoder;
+import com.ecommerce.model.repository.UserRepository;
 import com.ecommerce.model.user.User;
 import com.ecommerce.model.user.UserRole;
 import com.ecommerce.model.user.dto.CreateUserDTO;
 import com.ecommerce.model.user.dto.UpdateUserDTO;
-import com.ecommerce.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

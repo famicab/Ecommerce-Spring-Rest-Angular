@@ -12,8 +12,8 @@ import com.ecommerce.dto.CreateOrderDTO;
 import com.ecommerce.model.LineOrder;
 import com.ecommerce.model.Order;
 import com.ecommerce.model.Product;
+import com.ecommerce.model.repository.OrderRepository;
 import com.ecommerce.model.user.User;
-import com.ecommerce.repository.OrderRepository;
 
 import lombok.RequiredArgsConstructor;
 

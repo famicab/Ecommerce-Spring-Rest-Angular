@@ -8,7 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import com.ecommerce.controller.FilesController;
 import com.ecommerce.dto.CreateProductDTO;
 import com.ecommerce.model.Product;
 import com.ecommerce.model.repository.ProductRepository;
@@ -24,15 +26,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductService extends BaseService<Product, Long, ProductRepository>{
 
-	
-	//FIXME this class doesn't work atm
 	private final CategoryService categoryService;
 	private final StorageService storageService;
 	
 	public Product newProduct(CreateProductDTO newProductDTO, MultipartFile file) {
 		String imageUrl = null;
 		
-		
+		if(file != null && !file.isEmpty()) {
+			String image = storageService.store(file);
+			imageUrl = MvcUriComponentsBuilder.fromMethodName(FilesController.class, "serveFile", image, null)
+					.build().toUriString();
+		}
 		
 		Product newProduct = Product.builder()
 				.name(newProductDTO.getName())
